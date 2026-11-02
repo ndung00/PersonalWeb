@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Cá Nhân & Thành Tựu - Warm Cozy Edition</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cozy: {
+                            50: '#FFFCF7',
+                            100: '#FAF4E8',
+                            200: '#F5E7CE',
+                            300: '#EBD2A3',
+                            400: '#E0B873',
+                            500: '#D49E47',
+                            600: '#B87E2C',
+                            800: '#6B4513',
+                            900: '#432909',
+                        },
+                        cream: '#FFFDF9',
+                        warmSand: '#F5ECE0'
+                    },
+                    boxShadow: {
+                        'cozy': '0 10px 30px -5px rgba(212, 158, 71, 0.12), 0 4px 12px -2px rgba(107, 69, 19, 0.05)',
+                        'cozy-hover': '0 20px 35px -10px rgba(212, 158, 71, 0.22), 0 8px 16px -4px rgba(107, 69, 19, 0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons & Chosen Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+NZ:wght@100..400&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Fixed Fonts & Base Styles */
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: #FAF4E8;
+            color: #432909;
+        }
+
+        .font-handwriting {
+            font-family: 'Playwrite NZ', cursive;
+        }
+
+        .font-content {
+            font-family: 'Roboto Slab', serif;
+        }
+
+        /* Block Cards & Aesthetics */
+        .cozy-block {
+            background: #FFFDF9;
+            border-radius: 28px;
+            border: 2px solid #F5E7CE;
+            box-shadow: 0 10px 25px -5px rgba(212, 158, 71, 0.1), 0 4px 10px -2px rgba(107, 69, 19, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cozy-block-hover:hover {
+            transform: translateY(-4px);
+            border-color: #E0B873;
+            box-shadow: 0 18px 30px -8px rgba(212, 158, 71, 0.2), 0 8px 16px -4px rgba(107, 69, 19, 0.06);
+        }
+
+        .cozy-pill {
+            border-radius: 20px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF4E8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E0B873;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16 pt-4 text-cozy-900 selection:bg-cozy-200">
+
+    <!-- Header Navigation -->
+    <header class="max-w-6xl mx-auto px-4 mb-6">
+        <div class="cozy-block px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cozy-400 to-cozy-300 flex items-center justify-center text-cozy-900 font-bold text-xl shadow-inner">
+                    <i class="fa-solid fa-sun text-cozy-800"></i>
+                </div>
+                <span class="font-handwriting text-3xl font-bold tracking-wide text-cozy-800">
+                    Góc Nhỏ Cá Nhân
+                </span>
+            </div>
+
+            <!-- Backup Data Dropdown -->
+            <div class="relative">
+                <button id="dataMenuBtn" class="px-4 py-2 text-sm font-semibold cozy-pill bg-cozy-100 text-cozy-800 hover:bg-cozy-200 border border-cozy-300 transition flex items-center gap-2">
+                    <i class="fa-solid fa-box-archive text-cozy-600"></i>
+                    <span class="hidden sm:inline">Dữ liệu</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+                <div id="dataMenu" class="hidden absolute right-0 mt-2 w-52 rounded-2xl cozy-block p-2 z-50 shadow-xl border border-cozy-300">
+                    <button onclick="exportData()" class="w-full px-3 py-2 text-left text-sm rounded-xl hover:bg-cozy-100 flex items-center gap-2 text-cozy-800">
+                        <i class="fa-solid fa-file-export text-cozy-600"></i> Xuất dữ liệu (JSON)
+                    </button>
+                    <label class="w-full px-3 py-2 text-left text-sm rounded-xl hover:bg-cozy-100 flex items-center gap-2 cursor-pointer text-cozy-800">
+                        <i class="fa-solid fa-file-import text-cozy-600"></i> Nhập dữ liệu
+                        <input type="file" id="importFileInput" accept=".json" class="hidden" onchange="importData(event)">
+                    </label>
+                    <hr class="my-1 border-cozy-200">
+                    <button onclick="resetData()" class="w-full px-3 py-2 text-left text-sm rounded-xl hover:bg-red-50 text-red-700 flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-left"></i> Reset về mặc định
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 space-y-6">
+
+        <!-- BLOCK 1: PROFILE HERO BANNER -->
+        <section class="cozy-block p-6 sm:p-8 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
+                <!-- Avatar with Warm Rounded Framing -->
+                <div class="relative group">
+                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl p-2 bg-gradient-to-b from-cozy-300 to-cozy-100 shadow-md">
+                        <img id="profileAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" alt="Avatar" class="w-full h-full rounded-2xl object-cover">
+                    </div>
+                    <button onclick="openAvatarModal()" class="absolute inset-0 m-2 bg-cozy-900/60 rounded-2xl opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold gap-1">
+                        <i class="fa-solid fa-camera"></i> Đổi ảnh
+                    </button>
+                </div>
+
+                <!-- Personal Header Text -->
+                <div class="flex-1 text-center md:text-left space-y-3">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <div>
+                            <h1 id="profileName" class="font-handwriting text-2xl sm:text-2.75xl font-bold text-cozy-900 leading-tight">
+                                Nguyễn Văn A
+                            </h1>
+                            <p id="profileTitle" class="text-cozy-600 font-bold text-base sm:text-lg">
+                                Kỹ Sư Phần Mềm & Sáng Tạo Nội Dung
+                            </p>
+                        </div>
+                        <button onclick="openEditProfileModal()" class="self-center md:self-start px-5 py-2.5 text-sm cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white font-bold shadow-md shadow-cozy-500/20 transition flex items-center gap-2">
+                            <i class="fa-solid fa-pen-to-square"></i> Sửa thông tin
+                        </button>
+                    </div>
+
+                    <!-- Intro Bio Warm Speech Box -->
+                    <div class="bg-cozy-100/80 p-4 rounded-2xl border border-cozy-200 text-cozy-800 text-sm sm:text-base font-content italic leading-relaxed">
+                        "<span id="profileBio">Đam mê xây dựng các sản phẩm công nghệ hiện đại, nâng cao trải nghiệm người dùng và tự do sáng tạo. Luôn học hỏi mỗi ngày.</span>"
+                    </div>
+
+                    <!-- Quick Contact Badges -->
+                    <div id="profileContacts" class="flex flex-wrap justify-center md:justify-start gap-3 pt-1 text-xs sm:text-sm text-cozy-800 font-semibold">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Warm Summary Cards Block -->
+            <div id="statsBanner" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-cozy-200">
+                <!-- Dynamically updated -->
+            </div>
+        </section>
+
+        <!-- BLOCK 2: NAVIGATION TABS BLOCK -->
+        <nav class="cozy-block p-2">
+            <div class="flex overflow-x-auto no-scrollbar gap-2 p-1">
+                <button onclick="switchTab('bio')" id="tab-bio" class="tab-btn flex-1 min-w-[130px] py-3 px-4 font-bold text-sm sm:text-base cozy-pill transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-user-heart"></i> Giới thiệu
+                </button>
+                <button onclick="switchTab('hobbies')" id="tab-hobbies" class="tab-btn flex-1 min-w-[130px] py-3 px-4 font-bold text-sm sm:text-base cozy-pill transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-mug-hot"></i> Sở thích
+                </button>
+                <button onclick="switchTab('achievements')" id="tab-achievements" class="tab-btn flex-1 min-w-[130px] py-3 px-4 font-bold text-sm sm:text-base cozy-pill transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-star text-amber-500"></i> Thành tựu
+                </button>
+                <button onclick="switchTab('skills')" id="tab-skills" class="tab-btn flex-1 min-w-[130px] py-3 px-4 font-bold text-sm sm:text-base cozy-pill transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-laptop-code"></i> Kỹ năng & Dự án
+                </button>
+            </div>
+        </nav>
+
+        <!-- BLOCK 3: SEARCH & CONTEXT CONTROLS -->
+        <div id="filterContainer" class="cozy-block p-4 flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <div class="relative w-full sm:w-80">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-cozy-400 text-sm"></i>
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Tìm kiếm các mục..." class="w-full pl-11 pr-4 py-2.5 text-sm font-content rounded-2xl bg-cozy-100 border border-cozy-200 text-cozy-900 focus:outline-none focus:ring-2 focus:ring-cozy-400 placeholder:text-cozy-400">
+            </div>
+            <div id="addItemBtnContainer" class="w-full sm:w-auto">
+                <!-- Add Button dynamically injected -->
+            </div>
+        </div>
+
+        <!-- BLOCK 4: TAB CONTENT SECTIONS -->
+
+        <!-- CONTENT TAB 1: BIO -->
+        <div id="content-bio" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Detailed Story Block -->
+                <div class="cozy-block p-6 sm:p-8 md:col-span-2 space-y-4">
+                    <h3 class="font-handwriting text-3xl font-bold text-cozy-800 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open-reader text-cozy-500 text-2xl"></i> Câu chuyện cá nhân
+                    </h3>
+                    <div id="bioDetailText" class="font-content text-cozy-800 leading-relaxed space-y-3 text-base">
+                        <!-- Content loaded by JS -->
+                    </div>
+                </div>
+
+                <!-- Info Card Block -->
+                <div class="cozy-block p-6 space-y-4">
+                    <h3 class="font-handwriting text-3xl font-bold text-cozy-800 flex items-center gap-2">
+                        <i class="fa-solid fa-address-card text-cozy-500 text-2xl"></i> Chi tiết
+                    </h3>
+                    <ul id="personalInfoList" class="font-content space-y-3 text-sm">
+                        <!-- Content loaded by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTENT TAB 2: HOBBIES -->
+        <div id="content-hobbies" class="tab-content hidden">
+            <div id="hobbiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Hobby cards rendered by JS -->
+            </div>
+        </div>
+
+        <!-- CONTENT TAB 3: ACHIEVEMENTS -->
+        <div id="content-achievements" class="tab-content hidden">
+            <div id="achievementsTimeline" class="space-y-4">
+                <!-- Milestone cards rendered by JS -->
+            </div>
+        </div>
+
+        <!-- CONTENT TAB 4: SKILLS & PROJECTS -->
+        <div id="content-skills" class="tab-content hidden space-y-6">
+            <!-- Skills Bars Block -->
+            <div class="cozy-block p-6 sm:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-handwriting text-3xl font-bold text-cozy-800 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-cozy-500 text-2xl"></i> Kỹ năng chuyên môn
+                    </h3>
+                    <button onclick="openSkillModal()" class="px-4 py-2 text-xs font-bold cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white transition">
+                        <i class="fa-solid fa-plus"></i> Thêm kỹ năng
+                    </button>
+                </div>
+                <div id="skillsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                    <!-- Skills progress bars rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div>
+                <h3 class="font-handwriting text-3xl font-bold mb-4 text-cozy-800 flex items-center gap-2 px-2">
+                    <i class="fa-solid fa-folder-open text-cozy-500 text-2xl"></i> Dự án tiêu biểu
+                </h3>
+                <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Project cards rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL POPUPS (WARM COZY BOX) -->
+    <div id="modalBackdrop" class="fixed inset-0 bg-cozy-900/40 backdrop-blur-sm z-50 hidden transition-opacity opacity-0 flex items-center justify-center p-4 overflow-y-auto">
+
+        <!-- 1. Edit Profile Modal -->
+        <div id="profileModal" class="modal-box hidden cozy-block p-6 sm:p-8 w-full max-w-lg shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-cozy-200 pb-3">
+                <h3 class="font-handwriting text-3xl font-bold text-cozy-900">Sửa hồ sơ cá nhân</h3>
+                <button onclick="closeModal()" class="text-cozy-400 hover:text-cozy-800"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="saveProfile(event)" class="space-y-3 text-sm font-content">
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Họ và Tên</label>
+                    <input type="text" id="editName" required class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Chức danh / Tiêu đề</label>
+                    <input type="text" id="editTitle" required class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Bio ngắn</label>
+                    <textarea id="editBio" rows="2" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Giới thiệu chi tiết</label>
+                    <textarea id="editBioDetail" rows="4" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block mb-1 font-bold text-cozy-800">Email</label>
+                        <input type="email" id="editEmail" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block mb-1 font-bold text-cozy-800">Địa điểm</label>
+                        <input type="text" id="editLocation" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-3 border-t border-cozy-200">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2.5 cozy-pill hover:bg-cozy-100 font-bold">Hủy</button>
+                    <button type="submit" class="px-5 py-2.5 cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white font-bold shadow-md">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 2. Avatar Modal -->
+        <div id="avatarModal" class="modal-box hidden cozy-block p-6 w-full max-w-md shadow-2xl space-y-4">
+            <h3 class="font-handwriting text-3xl font-bold text-cozy-900">Cập nhật ảnh đại diện</h3>
+            <div>
+                <label class="block mb-1 text-sm font-bold text-cozy-800">URL hình ảnh</label>
+                <input type="url" id="editAvatarUrl" placeholder="https://example.com/photo.jpg" class="w-full px-4 py-2.5 text-sm rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="closeModal()" class="px-5 py-2 text-sm cozy-pill hover:bg-cozy-100 font-bold">Hủy</button>
+                <button onclick="saveAvatar()" class="px-5 py-2 text-sm cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white font-bold shadow-md">Lưu ảnh</button>
+            </div>
+        </div>
+
+        <!-- 3. Hobby Modal -->
+        <div id="hobbyModal" class="modal-box hidden cozy-block p-6 sm:p-8 w-full max-w-lg shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-cozy-200 pb-3">
+                <h3 id="hobbyModalTitle" class="font-handwriting text-3xl font-bold text-cozy-900">Thêm sở thích mới</h3>
+                <button onclick="closeModal()" class="text-cozy-400 hover:text-cozy-800"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="saveHobby(event)" class="space-y-3 text-sm font-content">
+                <input type="hidden" id="hobbyId">
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Tên sở thích</label>
+                    <input type="text" id="hobbyTitle" required placeholder="Ví dụ: Nhiếp ảnh, Đọc sách..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Biểu tượng Icon (FontAwesome)</label>
+                    <input type="text" id="hobbyIcon" placeholder="fa-camera, fa-book, fa-mug-hot..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Mô tả cảm xúc / Thói quen</label>
+                    <textarea id="hobbyDesc" rows="3" required placeholder="Chia sẻ cảm xúc ấm áp của bạn về sở thích này..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Thẻ phân loại (Cách nhau bằng dấu phẩy)</label>
+                    <input type="text" id="hobbyTags" placeholder="Sáng tạo, Thư giãn, Cuối tuần" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div class="flex justify-end gap-2 pt-3 border-t border-cozy-200">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2.5 cozy-pill hover:bg-cozy-100 font-bold">Hủy</button>
+                    <button type="submit" class="px-5 py-2.5 cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white font-bold shadow-md">Lưu sở thích</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 4. Achievement Modal -->
+        <div id="achievementModal" class="modal-box hidden cozy-block p-6 sm:p-8 w-full max-w-lg shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-cozy-200 pb-3">
+                <h3 id="achievementModalTitle" class="font-handwriting text-3xl font-bold text-cozy-900">Thêm thành tựu mới</h3>
+                <button onclick="closeModal()" class="text-cozy-400 hover:text-cozy-800"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="saveAchievement(event)" class="space-y-3 text-sm font-content">
+                <input type="hidden" id="achievementId">
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Tên thành tựu / Cột mốc</label>
+                    <input type="text" id="achievementTitle" required placeholder="Giải thưởng, Chứng chỉ..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block mb-1 font-bold text-cozy-800">Thời gian / Năm</label>
+                        <input type="text" id="achievementYear" required placeholder="2024" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block mb-1 font-bold text-cozy-800">Đơn vị / Tổ chức</label>
+                        <input type="text" id="achievementOrg" placeholder="Tên đơn vị" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Mô tả ngắn</label>
+                    <textarea id="achievementDesc" rows="3" placeholder="Ghi chú thêm về kỷ niệm hay kết quả..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-3 border-t border-cozy-200">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2.5 cozy-pill hover:bg-cozy-100 font-bold">Hủy</button>
+                    <button type="submit" class="px-5 py-2.5 cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white font-bold shadow-md">Lưu cột mốc</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 5. Skill Modal -->
+        <div id="skillModal" class="modal-box hidden cozy-block p-6 w-full max-w-md shadow-2xl space-y-4">
+            <h3 class="font-handwriting text-3xl font-bold text-cozy-900">Thêm kỹ năng</h3>
+            <form onsubmit="saveSkill(event)" class="space-y-3 text-sm font-content">
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Tên kỹ năng</label>
+                    <input type="text" id="skillName" required placeholder="Lập trình, Thiết kế..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Mức độ (%)</label>
+                    <input type="number" id="skillLevel" min="10" max="100" value="85" required class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2 text-sm cozy-pill hover:bg-cozy-100 font-bold">Hủy</button>
+                    <button type="submit" class="px-5 py-2 text-sm cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white font-bold shadow-md">Thêm kỹ năng</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 6. Project Modal -->
+        <div id="projectModal" class="modal-box hidden cozy-block p-6 sm:p-8 w-full max-w-lg shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-cozy-200 pb-3">
+                <h3 id="projectModalTitle" class="font-handwriting text-3xl font-bold text-cozy-900">Thêm dự án mới</h3>
+                <button onclick="closeModal()" class="text-cozy-400 hover:text-cozy-800"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="saveProject(event)" class="space-y-3 text-sm font-content">
+                <input type="hidden" id="projectId">
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Tên dự án</label>
+                    <input type="text" id="projectTitle" required placeholder="Tên sản phẩm..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Mô tả dự án</label>
+                    <textarea id="projectDesc" rows="3" required placeholder="Mô tả ý tưởng & ứng dụng..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Công nghệ / Công cụ</label>
+                    <input type="text" id="projectTech" placeholder="React, Tailwind, Node.js" class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 font-bold text-cozy-800">Đường dẫn Demo/Github</label>
+                    <input type="url" id="projectLink" placeholder="https://github.com/..." class="w-full px-4 py-2.5 rounded-2xl bg-cozy-100 border border-cozy-200 focus:ring-2 focus:ring-cozy-400 focus:outline-none">
+                </div>
+                <div class="flex justify-end gap-2 pt-3 border-t border-cozy-200">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2.5 cozy-pill hover:bg-cozy-100 font-bold">Hủy</button>
+                    <button type="submit" class="px-5 py-2.5 cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white font-bold shadow-md">Lưu dự án</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 px-5 py-3.5 rounded-2xl bg-cozy-800 text-cozy-50 shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 z-50 text-sm font-bold border border-cozy-600">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-cozy-300 text-lg"></i>
+        <span id="toastMsg">Thao tác thành công!</span>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // DEFAULT WARM PROFILE DATA STRUCTURE
+        const defaultData = {
+            profile: {
+                name: "Nguyễn Văn A",
+                title: "Kỹ Sư Phần Mềm & Người Yêu Sáng Tạo",
+                bio: "Yêu thích sự đơn giản, không gian làm việc ấm cúng và những ly cà phê ấm nóng mỗi sáng. Luôn tìm kiếm cảm hứng sáng tạo trong mọi khoảnh khắc đời thường.",
+                bioDetail: "Chào bạn! Tôi là một lập trình viên yêu thích sự tỉ mỉ và vẻ đẹp nhẹ nhàng trong thiết kế. Tôi dành thời gian để xây dựng các sản phẩm số mượt mà, viết lách cá nhân và khám phá những trải nghiệm mới. Mong muốn của tôi là mang tới góc nhỏ ấm áp và lan tỏa nguồn năng lượng tích cực tới mọi người.",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+                email: "nguyenvana@cozy.vn",
+                location: "Hà Nội, Việt Nam"
+            },
+            hobbies: [
+                {
+                    id: "h1",
+                    title: "Pha Cà Phê Thủ Công",
+                    icon: "fa-mug-hot",
+                    desc: "Tận hưởng hương vị Pour-over dịu nhẹ vào mỗi buổi sáng tĩnh lặng.",
+                    tags: ["Thư giãn", "Thói quen", "Cà phê"]
+                },
+                {
+                    id: "h2",
+                    title: "Nhiếp Ảnh Phim & Đời Thường",
+                    icon: "fa-camera-retro",
+                    desc: "Ghi lại những mảng màu vàng ấm áp của nắng chiều và góc phố thân quen.",
+                    tags: ["Nghệ thuật", "Sáng tạo"]
+                },
+                {
+                    id: "h3",
+                    title: "Đọc Sách Bên Cửa Sổ",
+                    icon: "fa-book-open",
+                    desc: "Thích đắm mình vào những trang sách tư duy nhẹ nhàng và tản văn cuối tuần.",
+                    tags: ["Sách", "Học tập"]
+                }
+            ],
+            achievements: [
+                {
+                    id: "a1",
+                    title: "Giải Nhất Sáng Tạo UI/UX Warm Design",
+                    year: "2024",
+                    org: "Creative Community",
+                    desc: "Thiết kế giao diện mang cảm hứng ấm áp giúp gia tăng sự gắn kết trải nghiệm người dùng."
+                },
+                {
+                    id: "a2",
+                    title: "Chứng Chỉ Kỹ Sư Phần Mềm Cao Cấp",
+                    year: "2023",
+                    org: "Global Tech Institute",
+                    desc: "Hoàn thành chương trình đào tạo chuyên sâu về kiến trúc hệ thống và tối ưu trải nghiệm."
+                }
+            ],
+            skills: [
+                { id: "s1", name: "UI/UX & Aesthetics Design", level: 92 },
+                { id: "s2", name: "HTML, CSS & Tailwind CSS", level: 95 },
+                { id: "s3", name: "JavaScript & Frontend Frameworks", level: 88 },
+                { id: "s4", name: "Viết lách & Sáng tạo nội dung", level: 80 }
+            ],
+            projects: [
+                {
+                    id: "p1",
+                    title: "Góc Nhỏ Nhật Ký Cá Nhân",
+                    desc: "Ứng dụng viết nhật ký tối giản mang tone màu ấm hỗ trợ lưu giữ kỷ niệm và cảm xúc.",
+                    tech: ["HTML5", "Tailwind CSS", "JavaScript"],
+                    link: "https://github.com"
+                },
+                {
+                    id: "p2",
+                    title: "Website Lofi Music Player",
+                    desc: "Trình phát nhạc lofi thư giãn tích hợp âm thanh tiếng mưa và đốm lửa ấm áp.",
+                    tech: ["React", "Web Audio API"],
+                    link: "https://github.com"
+                }
+            ]
+        };
+
+        // Application State
+        let appData = JSON.parse(localStorage.getItem('cozy_portfolio_data')) || defaultData;
+        let currentTab = 'bio';
+        let searchQuery = '';
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProfileHeader();
+            switchTab('bio');
+            setupDropdownMenus();
+        });
+
+        // SAVE DATA TO LOCAL STORAGE
+        function saveData() {
+            localStorage.setItem('cozy_portfolio_data', JSON.stringify(appData));
+            renderProfileHeader();
+        }
+
+        // TAB SWITCHING LOGIC
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Highlight Buttons with Cozy Rounded Style
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-cozy-500', 'text-white', 'shadow-md');
+                btn.classList.add('bg-transparent', 'text-cozy-800', 'hover:bg-cozy-100');
+            });
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-transparent', 'text-cozy-800', 'hover:bg-cozy-100');
+                activeBtn.classList.add('bg-cozy-500', 'text-white', 'shadow-md');
+            }
+
+            // Hide/Show Content
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            const activeContent = document.getElementById(`content-${tabName}`);
+            if (activeContent) activeContent.classList.remove('hidden');
+
+            // Handle Filter Bar & Add Button visibility
+            const filterContainer = document.getElementById('filterContainer');
+            const addItemContainer = document.getElementById('addItemBtnContainer');
+            
+            if (tabName === 'bio') {
+                filterContainer.classList.add('hidden');
+            } else {
+                filterContainer.classList.remove('hidden');
+                document.getElementById('searchInput').value = searchQuery = '';
+
+                if (tabName === 'hobbies') {
+                    addItemContainer.innerHTML = `
+                        <button onclick="openHobbyModal()" class="w-full sm:w-auto px-5 py-2.5 text-sm font-bold cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white transition flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-plus"></i> Thêm sở thích
+                        </button>`;
+                } else if (tabName === 'achievements') {
+                    addItemContainer.innerHTML = `
+                        <button onclick="openAchievementModal()" class="w-full sm:w-auto px-5 py-2.5 text-sm font-bold cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white transition flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-plus"></i> Thêm thành tựu
+                        </button>`;
+                } else if (tabName === 'skills') {
+                    addItemContainer.innerHTML = `
+                        <button onclick="openProjectModal()" class="w-full sm:w-auto px-5 py-2.5 text-sm font-bold cozy-pill bg-cozy-500 hover:bg-cozy-600 text-white transition flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-plus"></i> Thêm dự án
+                        </button>`;
+                }
+            }
+
+            renderCurrentSection();
+        }
+
+        // RENDER PROFILE HEADER & STATS BLOCK
+        function renderProfileHeader() {
+            const p = appData.profile;
+            document.getElementById('profileName').textContent = p.name;
+            document.getElementById('profileTitle').textContent = p.title;
+            document.getElementById('profileBio').textContent = p.bio;
+            document.getElementById('profileAvatar').src = p.avatar;
+
+            // Render Quick Contact Badges
+            document.getElementById('profileContacts').innerHTML = `
+                <span class="px-3 py-1 rounded-xl bg-cozy-100 border border-cozy-200 flex items-center gap-1.5"><i class="fa-solid fa-envelope text-cozy-600"></i> ${p.email || 'N/A'}</span>
+                <span class="px-3 py-1 rounded-xl bg-cozy-100 border border-cozy-200 flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-cozy-600"></i> ${p.location || 'N/A'}</span>
+            `;
+
+            // Render Stats Cards
+            document.getElementById('statsBanner').innerHTML = `
+                <div class="bg-cozy-100/60 p-3 rounded-2xl text-center border border-cozy-200">
+                    <div class="font-handwriting text-3xl font-bold text-cozy-800">${appData.achievements.length}</div>
+                    <div class="text-xs font-bold text-cozy-600">Thành tựu</div>
+                </div>
+                <div class="bg-cozy-100/60 p-3 rounded-2xl text-center border border-cozy-200">
+                    <div class="font-handwriting text-3xl font-bold text-cozy-800">${appData.hobbies.length}</div>
+                    <div class="text-xs font-bold text-cozy-600">Sở thích</div>
+                </div>
+                <div class="bg-cozy-100/60 p-3 rounded-2xl text-center border border-cozy-200">
+                    <div class="font-handwriting text-3xl font-bold text-cozy-800">${appData.projects.length}</div>
+                    <div class="text-xs font-bold text-cozy-600">Dự án</div>
+                </div>
+                <div class="bg-cozy-100/60 p-3 rounded-2xl text-center border border-cozy-200">
+                    <div class="font-handwriting text-3xl font-bold text-cozy-800">${appData.skills.length}</div>
+                    <div class="text-xs font-bold text-cozy-600">Kỹ năng</div>
+                </div>
+            `;
+        }
+
+        // RENDER CURRENT ACTIVE SECTION
+        function renderCurrentSection() {
+            if (currentTab === 'bio') renderBioTab();
+            else if (currentTab === 'hobbies') renderHobbiesTab();
+            else if (currentTab === 'achievements') renderAchievementsTab();
+            else if (currentTab === 'skills') renderSkillsAndProjectsTab();
+        }
+
+        // TAB 1: BIO
+        function renderBioTab() {
+            const p = appData.profile;
+            document.getElementById('bioDetailText').innerHTML = `<p>${p.bioDetail || p.bio}</p>`;
+            document.getElementById('personalInfoList').innerHTML = `
+                <li class="flex justify-between border-b border-cozy-200 pb-2">
+                    <span class="text-cozy-600 font-semibold">Họ tên:</span>
+                    <span class="font-bold">${p.name}</span>
+                </li>
+                <li class="flex justify-between border-b border-cozy-200 pb-2">
+                    <span class="text-cozy-600 font-semibold">Chức danh:</span>
+                    <span class="font-bold">${p.title}</span>
+                </li>
+                <li class="flex justify-between border-b border-cozy-200 pb-2">
+                    <span class="text-cozy-600 font-semibold">Email:</span>
+                    <span class="font-bold">${p.email}</span>
+                </li>
+                <li class="flex justify-between border-b border-cozy-200 pb-2">
+                    <span class="text-cozy-600 font-semibold">Địa điểm:</span>
+                    <span class="font-bold">${p.location}</span>
+                </li>
+            `;
+        }
+
+        // TAB 2: HOBBIES
+        function renderHobbiesTab() {
+            const grid = document.getElementById('hobbiesGrid');
+            const items = appData.hobbies.filter(h => 
+                h.title.toLowerCase().includes(searchQuery) || 
+                h.desc.toLowerCase().includes(searchQuery) ||
+                (h.tags && h.tags.some(t => t.toLowerCase().includes(searchQuery)))
+            );
+
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-cozy-400 font-bold">Chưa tìm thấy sở thích nào.</div>`;
+                return;
+            }
+
+            grid.innerHTML = items.map(h => `
+                <div class="cozy-block cozy-block-hover p-6 relative group flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-cozy-200 text-cozy-800 flex items-center justify-center text-xl shadow-inner">
+                                <i class="fa-solid ${h.icon || 'fa-mug-hot'}"></i>
+                            </div>
+                            <div class="opacity-0 group-hover:opacity-100 transition flex items-center gap-1">
+                                <button onclick="openHobbyModal('${h.id}')" class="p-1.5 text-cozy-400 hover:text-cozy-800"><i class="fa-solid fa-pen"></i></button>
+                                <button onclick="deleteHobby('${h.id}')" class="p-1.5 text-cozy-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <h4 class="font-handwriting text-2xl font-bold mb-2 text-cozy-900">${h.title}</h4>
+                        <p class="font-content text-sm text-cozy-800 mb-4 leading-relaxed">${h.desc}</p>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 pt-2">
+                        ${(h.tags || []).map(t => `<span class="px-3 py-1 rounded-xl text-xs bg-cozy-100 border border-cozy-200 text-cozy-800 font-bold">#${t.trim()}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // TAB 3: ACHIEVEMENTS
+        function renderAchievementsTab() {
+            const container = document.getElementById('achievementsTimeline');
+            const items = appData.achievements.filter(a => 
+                a.title.toLowerCase().includes(searchQuery) || 
+                a.org.toLowerCase().includes(searchQuery) ||
+                a.desc.toLowerCase().includes(searchQuery)
+            );
+
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-cozy-400 font-bold">Chưa tìm thấy thành tựu nào.</div>`;
+                return;
+            }
+
+            container.innerHTML = items.map(a => `
+                <div class="cozy-block cozy-block-hover p-6 relative group border-l-8 border-l-cozy-400">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold px-3 py-1 rounded-xl bg-cozy-200 text-cozy-800">${a.year}</span>
+                            <h4 class="font-handwriting text-2xl font-bold text-cozy-900">${a.title}</h4>
+                        </div>
+                        <div class="opacity-0 group-hover:opacity-100 transition flex items-center gap-1">
+                            <button onclick="openAchievementModal('${a.id}')" class="p-1.5 text-cozy-400 hover:text-cozy-800"><i class="fa-solid fa-pen text-sm"></i></button>
+                            <button onclick="deleteAchievement('${a.id}')" class="p-1.5 text-cozy-400 hover:text-red-600"><i class="fa-solid fa-trash text-sm"></i></button>
+                        </div>
+                    </div>
+                    <p class="text-xs font-bold text-cozy-600 mb-2"><i class="fa-solid fa-award mr-1"></i>${a.org}</p>
+                    <p class="font-content text-sm text-cozy-800 leading-relaxed">${a.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // TAB 4: SKILLS & PROJECTS
+        function renderSkillsAndProjectsTab() {
+            // Render Skills
+            const skillsContainer = document.getElementById('skillsContainer');
+            skillsContainer.innerHTML = appData.skills.map(s => `
+                <div class="space-y-1.5 group font-content">
+                    <div class="flex justify-between text-sm">
+                        <span class="font-bold text-cozy-900">${s.name}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-cozy-600">${s.level}%</span>
+                            <button onclick="deleteSkill('${s.id}')" class="text-cozy-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+                    <div class="w-full h-3 rounded-full bg-cozy-100 border border-cozy-200 overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-cozy-300 to-cozy-500 rounded-full transition-all duration-500" style="width: ${s.level}%"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Projects
+            const projectsGrid = document.getElementById('projectsGrid');
+            const projects = appData.projects.filter(p => 
+                p.title.toLowerCase().includes(searchQuery) ||
+                p.desc.toLowerCase().includes(searchQuery)
+            );
+
+            if (projects.length === 0) {
+                projectsGrid.innerHTML = `<div class="col-span-full text-center py-8 text-cozy-400 font-bold">Chưa tìm thấy dự án nào.</div>`;
+                return;
+            }
+
+            projectsGrid.innerHTML = projects.map(p => `
+                <div class="cozy-block cozy-block-hover p-6 relative group flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-handwriting text-2xl font-bold text-cozy-900">${p.title}</h4>
+                            <div class="opacity-0 group-hover:opacity-100 transition flex items-center gap-1">
+                                <button onclick="openProjectModal('${p.id}')" class="p-1.5 text-cozy-400 hover:text-cozy-800"><i class="fa-solid fa-pen"></i></button>
+                                <button onclick="deleteProject('${p.id}')" class="p-1.5 text-cozy-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <p class="font-content text-sm text-cozy-800 mb-4 leading-relaxed">${p.desc}</p>
+                    </div>
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            ${(p.tech || []).map(t => `<span class="px-2.5 py-1 rounded-xl text-xs bg-cozy-200/70 text-cozy-900 font-bold">${t.trim()}</span>`).join('')}
+                        </div>
+                        ${p.link ? `<a href="${p.link}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-cozy-600 hover:text-cozy-900 transition">Xem dự án <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // SEARCH HANDLER
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            renderCurrentSection();
+        }
+
+        // MODAL HELPERS
+        function openModal(modalId) {
+            document.getElementById('modalBackdrop').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('modalBackdrop').classList.remove('opacity-0');
+            }, 10);
+            document.querySelectorAll('.modal-box').forEach(m => m.classList.add('hidden'));
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modalBackdrop').classList.add('opacity-0');
+            setTimeout(() => {
+                document.getElementById('modalBackdrop').classList.add('hidden');
+                document.querySelectorAll('.modal-box').forEach(m => m.classList.add('hidden'));
+            }, 200);
+        }
+
+        // PROFILE EDIT
+        function openEditProfileModal() {
+            const p = appData.profile;
+            document.getElementById('editName').value = p.name;
+            document.getElementById('editTitle').value = p.title;
+            document.getElementById('editBio').value = p.bio;
+            document.getElementById('editBioDetail').value = p.bioDetail || p.bio;
+            document.getElementById('editEmail').value = p.email || '';
+            document.getElementById('editLocation').value = p.location || '';
+            openModal('profileModal');
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            appData.profile.name = document.getElementById('editName').value;
+            appData.profile.title = document.getElementById('editTitle').value;
+            appData.profile.bio = document.getElementById('editBio').value;
+            appData.profile.bioDetail = document.getElementById('editBioDetail').value;
+            appData.profile.email = document.getElementById('editEmail').value;
+            appData.profile.location = document.getElementById('editLocation').value;
+            
+            saveData();
+            closeModal();
+            renderCurrentSection();
+            showToast('Đã lưu thay đổi hồ sơ!');
+        }
+
+        // AVATAR EDIT
+        function openAvatarModal() {
+            document.getElementById('editAvatarUrl').value = appData.profile.avatar;
+            openModal('avatarModal');
+        }
+
+        function saveAvatar() {
+            const url = document.getElementById('editAvatarUrl').value.trim();
+            if (url) {
+                appData.profile.avatar = url;
+                saveData();
+                closeModal();
+                showToast('Đã cập nhật ảnh đại diện!');
+            }
+        }
+
+        // HOBBY ACTIONS
+        function openHobbyModal(id = null) {
+            document.getElementById('hobbyId').value = id || '';
+            if (id) {
+                const item = appData.hobbies.find(h => h.id === id);
+                document.getElementById('hobbyModalTitle').textContent = 'Chỉnh sửa sở thích';
+                document.getElementById('hobbyTitle').value = item.title;
+                document.getElementById('hobbyIcon').value = item.icon || '';
+                document.getElementById('hobbyDesc').value = item.desc;
+                document.getElementById('hobbyTags').value = (item.tags || []).join(', ');
+            } else {
+                document.getElementById('hobbyModalTitle').textContent = 'Thêm sở thích mới';
+                document.getElementById('hobbyTitle').value = '';
+                document.getElementById('hobbyIcon').value = '';
+                document.getElementById('hobbyDesc').value = '';
+                document.getElementById('hobbyTags').value = '';
+            }
+            openModal('hobbyModal');
+        }
+
+        function saveHobby(e) {
+            e.preventDefault();
+            const id = document.getElementById('hobbyId').value;
+            const title = document.getElementById('hobbyTitle').value;
+            const icon = document.getElementById('hobbyIcon').value || 'fa-mug-hot';
+            const desc = document.getElementById('hobbyDesc').value;
+            const tags = document.getElementById('hobbyTags').value.split(',').filter(t => t.trim() !== '');
+
+            if (id) {
+                const item = appData.hobbies.find(h => h.id === id);
+                item.title = title; item.icon = icon; item.desc = desc; item.tags = tags;
+            } else {
+                appData.hobbies.push({ id: 'h_' + Date.now(), title, icon, desc, tags });
+            }
+
+            saveData();
+            closeModal();
+            renderHobbiesTab();
+            showToast('Lưu sở thích thành công!');
+        }
+
+        function deleteHobby(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa sở thích này?')) {
+                appData.hobbies = appData.hobbies.filter(h => h.id !== id);
+                saveData();
+                renderHobbiesTab();
+                showToast('Đã xóa sở thích!');
+            }
+        }
+
+        // ACHIEVEMENT ACTIONS
+        function openAchievementModal(id = null) {
+            document.getElementById('achievementId').value = id || '';
+            if (id) {
+                const item = appData.achievements.find(a => a.id === id);
+                document.getElementById('achievementModalTitle').textContent = 'Sửa thành tựu';
+                document.getElementById('achievementTitle').value = item.title;
+                document.getElementById('achievementYear').value = item.year;
+                document.getElementById('achievementOrg').value = item.org || '';
+                document.getElementById('achievementDesc').value = item.desc || '';
+            } else {
+                document.getElementById('achievementModalTitle').textContent = 'Thêm thành tựu mới';
+                document.getElementById('achievementTitle').value = '';
+                document.getElementById('achievementYear').value = '';
+                document.getElementById('achievementOrg').value = '';
+                document.getElementById('achievementDesc').value = '';
+            }
+            openModal('achievementModal');
+        }
+
+        function saveAchievement(e) {
+            e.preventDefault();
+            const id = document.getElementById('achievementId').value;
+            const title = document.getElementById('achievementTitle').value;
+            const year = document.getElementById('achievementYear').value;
+            const org = document.getElementById('achievementOrg').value;
+            const desc = document.getElementById('achievementDesc').value;
+
+            if (id) {
+                const item = appData.achievements.find(a => a.id === id);
+                item.title = title; item.year = year; item.org = org; item.desc = desc;
+            } else {
+                appData.achievements.push({ id: 'a_' + Date.now(), title, year, org, desc });
+            }
+
+            saveData();
+            closeModal();
+            renderAchievementsTab();
+            showToast('Lưu cột mốc thành công!');
+        }
+
+        function deleteAchievement(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa thành tựu này?')) {
+                appData.achievements = appData.achievements.filter(a => a.id !== id);
+                saveData();
+                renderAchievementsTab();
+                showToast('Đã xóa cột mốc!');
+            }
+        }
+
+        // SKILLS LOGIC
+        function openSkillModal() {
+            document.getElementById('skillName').value = '';
+            document.getElementById('skillLevel').value = '85';
+            openModal('skillModal');
+        }
+
+        function saveSkill(e) {
+            e.preventDefault();
+            const name = document.getElementById('skillName').value;
+            const level = parseInt(document.getElementById('skillLevel').value);
+
+            appData.skills.push({ id: 's_' + Date.now(), name, level });
+            saveData();
+            closeModal();
+            renderSkillsAndProjectsTab();
+            showToast('Đã thêm kỹ năng mới!');
+        }
+
+        function deleteSkill(id) {
+            appData.skills = appData.skills.filter(s => s.id !== id);
+            saveData();
+            renderSkillsAndProjectsTab();
+            showToast('Đã xóa kỹ năng!');
+        }
+
+        // PROJECT LOGIC
+        function openProjectModal(id = null) {
+            document.getElementById('projectId').value = id || '';
+            if (id) {
+                const item = appData.projects.find(p => p.id === id);
+                document.getElementById('projectModalTitle').textContent = 'Chỉnh sửa dự án';
+                document.getElementById('projectTitle').value = item.title;
+                document.getElementById('projectDesc').value = item.desc;
+                document.getElementById('projectTech').value = (item.tech || []).join(', ');
+                document.getElementById('projectLink').value = item.link || '';
+            } else {
+                document.getElementById('projectModalTitle').textContent = 'Thêm dự án mới';
+                document.getElementById('projectTitle').value = '';
+                document.getElementById('projectDesc').value = '';
+                document.getElementById('projectTech').value = '';
+                document.getElementById('projectLink').value = '';
+            }
+            openModal('projectModal');
+        }
+
+        function saveProject(e) {
+            e.preventDefault();
+            const id = document.getElementById('projectId').value;
+            const title = document.getElementById('projectTitle').value;
+            const desc = document.getElementById('projectDesc').value;
+            const tech = document.getElementById('projectTech').value.split(',').filter(t => t.trim() !== '');
+            const link = document.getElementById('projectLink').value;
+
+            if (id) {
+                const item = appData.projects.find(p => p.id === id);
+                item.title = title; item.desc = desc; item.tech = tech; item.link = link;
+            } else {
+                appData.projects.push({ id: 'p_' + Date.now(), title, desc, tech, link });
+            }
+
+            saveData();
+            closeModal();
+            renderSkillsAndProjectsTab();
+            showToast('Lưu dự án thành công!');
+        }
+
+        function deleteProject(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa dự án này?')) {
+                appData.projects = appData.projects.filter(p => p.id !== id);
+                saveData();
+                renderSkillsAndProjectsTab();
+                showToast('Đã xóa dự án!');
+            }
+        }
+
+        // DROPDOWNS SETUP
+        function setupDropdownMenus() {
+            // Data Menu
+            const dataBtn = document.getElementById('dataMenuBtn');
+            const dataMenu = document.getElementById('dataMenu');
+            dataBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dataMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', () => {
+                dataMenu.classList.add('hidden');
+            });
+        }
+
+        // EXPORT / IMPORT / RESET
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `cozy_portfolio_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('Đã xuất file JSON!');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (importedData.profile && importedData.hobbies) {
+                        appData = importedData;
+                        saveData();
+                        renderCurrentSection();
+                        showToast('Nhập dữ liệu thành công!');
+                    } else {
+                        alert('Định dạng dữ liệu không khớp!');
+                    }
+                } catch (err) {
+                    alert('Lỗi khi đọc file JSON!');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetData() {
+            if (confirm('Khôi phục lại toàn bộ thông tin mặc định ban đầu?')) {
+                appData = JSON.parse(JSON.stringify(defaultData));
+                saveData();
+                renderCurrentSection();
+                showToast('Đã về mặc định!');
+            }
+        }
+
+        // TOAST NOTIFICATIONS
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
